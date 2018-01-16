@@ -1,0 +1,17 @@
+const React = require('react');
+
+module.exports = React.createClass({
+  getInitialState(){
+    return({
+      cut: this.props.cut
+    })
+  },
+  componentWillReceiveProps( props ){
+    this.setState({ cut: props.cut })
+  },
+  render(){
+    return(
+      <div></div>
+    )
+  }
+})

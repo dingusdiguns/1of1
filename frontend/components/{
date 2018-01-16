@@ -1,0 +1,211 @@
+const React = require('react');
+const Loading = require('./loading');
+const Opening = require('./opening')
+const Login = require('./login');
+const Head = require('./head');
+const Background = require('./background');
+const Style = require('./style');
+const Table = require('./table');
+const Order = require('./order');
+
+module.exports = React.createClass({
+  getInitialState(){
+    return({
+      loading: true,
+      status: "loading",
+      pattern: false,
+      user: true,
+      shirts: [
+        { type: "one" },
+        { type: "two" },
+        { type: "three" },
+        { type: "four" }
+      ],
+      chosen: {},
+      scroll: 0,
+      order: false
+    })
+  },
+
+  componentDidMount(){
+    window.setTimeout( function(){
+      this.setState({ status: "opening" });
+    }.bind( this ), 500 );
+  },
+
+  loading(){
+    if( this.state.status === "loading" ){
+      return(
+        <Loading></Loading>
+      )
+    }else if( !this.state.user ){
+      return(
+        <Login></Login>
+      )
+    }else{
+      return(
+        <div>
+          <Background pattern = { this.state.pattern } ></Background>
+          {
+            this.dom()
+          }
+        </div>
+      )
+    }
+  },
+
+  leftClick(){
+    if( this.state.scroll < 0 ){
+      this.setState({ scroll: this.state.scroll + 1 });
+    }
+  },
+
+  rightClick(){
+    if( this.state.scroll >= ( 2 - this.state.shirts.length ) ){
+      this.setState({ scroll: this.state.scroll - 1 });
+    }
+  },
+
+  dragStart( e ){
+    if( !this.state.pattern ){
+      this.setState({ startTime: new Date().getTime() ,touch: e.touches[0].clientX })
+    }
+  },
+
+  drag( e ){
+    if( !this.state.pattern ){
+      this.setState({ move: e.touches[0].clientX })
+    }
+  },
+
+  dragEnd( e ){
+    if( !this.state.pattern ){
+      let time = new Date().getTime();
+      if( (time - this.state.startTime) / 1000 > .1 ){
+        if( Math.abs( this.state.move && this.state.touch && this.state.touch - this.state.move ) > 80 ){
+          if( this.state.touch - this.state.move > 0 ){
+            this.rightClick();
+          }else if( this.state.touch - this.state.move < 0 ){
+            this.leftClick();
+          }
+        }
+      }else{
+        this.design();
+      }
+    }
+
+    this.setState({ touch: false, move: false })
+  },
+
+  design(){
+    let shirt = this.state.shirts[ Math.abs(this.state.scroll) ];
+    this.setState({ pattern: shirt });
+  },
+
+  controlls(){
+    if( !this.state.pattern ){
+      return(
+        <div>
+          <div className = "left-arrow" onClick = { this.leftClick }></div>
+          <div className = "right-arrow" onClick = { this.rightClick }></div>
+          <div className = "style-design" onClick = { this.design }>Design Shirt</div>
+        </div>
+      )
+    }
+  },
+
+  getStyle(){
+    if( this.state.order ){
+      return({
+        bottom: "100vh"
+      })
+    }else if( this.state.pattern ){
+      return({
+        bottom: "35vh"
+      })
+    }
+  },
+
+  clickOption( name, image ){
+    let chosen = this.state.chosen;
+    chosen[name] = image;
+    this.setState({ chosen: chosen })
+  },
+
+  table(){
+    if( this.state.pattern && !this.state.order ){
+      return(
+        <Table order = { this.order } back = { this.back } clickOption = { this.clickOption } pattern = { this.state.pattern } ></Table>
+      )
+    }
+  },
+
+  back(){
+    this.setState({ pattern: false })
+  },
+
+  dom(){
+    return(
+      <div>
+
+        <div className = "shirt-container" style = { this.getStyle() } onTouchStart = { this.dragStart } onTouchEnd = { this.dragEnd } onTouchMove = { this.drag }>
+          {
+            this.mapShirts()
+          }
+          {
+            this.controlls()
+          }
+          {
+            this.orderPage()
+          }
+
+        </div>
+        {
+          this.table()
+        }
+      </div>
+    )
+  },
+
+  orderBack(){
+    this.setState({ order: false });
+  },
+
+  orderPage(){
+    if( this.state.order ){
+      return(
+        <Order back = { this.orderBack }></Order>
+      )
+    }
+  },
+
+  goBack(){
+    this.setState({ pattern: false });
+  },
+
+  order(){
+    this.setState({ order: true, table: false })
+  },
+
+  mapShirts(){
+    return this.state.shirts.map(
+      function( el, index ){
+        return(
+          <Style order = { this.state.order } chosen = { this.state.chosen } key = { index } pattern = { this.state.pattern } type = { el.type } index = { index } scroll = { this.state.scroll }></Style>
+        )
+      }.bind( this )
+    )
+  },
+
+  test()
+
+  render(){
+    return(
+      <div>
+        {
+          this.loading()
+        }
+      </div>
+    )
+  }
+})
