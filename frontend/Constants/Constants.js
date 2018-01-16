@@ -1,4 +1,5 @@
 module.exports = {
   Login: "Login",
-  cardCreation: "cardCreation"
+  cardCreation: "cardCreation",
+  RECEIVEPATTERNS: "RECEIVEPATTERNS"
 }

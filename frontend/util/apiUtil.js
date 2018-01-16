@@ -38,4 +38,18 @@ module.exports = {
       }
     })
   },
+
+  getPatterns: function(){
+    $.ajax({
+      url: `/1of1/getPatterns/`,
+      method: "GET",
+      success: function(data){
+        if( !data.error ){
+          debugger
+          data = JSON.parse( data );
+          callback( data );
+        }
+      }
+    })
+  },
 }
