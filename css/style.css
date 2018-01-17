@@ -1,0 +1,73 @@
+body{
+  overflow-x: hidden;
+  font-family: Super;
+  background-color: rgb( 50,50,50 );
+  margin: 0px;
+}
+
+@font-face{
+  font-family: "Tungsten";
+  src: url('../fonts/Tungsten/Tungsten-Black.otf');
+}
+
+@font-face{
+  font-family: Super;
+  src: url('../fonts/Graphik/Super.otf');
+}
+
+@font-face{
+  font-family: Light;
+  src: url('../fonts/Graphik/Light.otf');
+}
+
+.box{
+  background-color: rgb( 20,20,20 );
+  margin-top: 1vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-left: 1vw;
+  height: 98vh;
+}
+
+.chooseStyle{
+  float: left;
+  width: 60vw;
+  margin-left: 9vw;
+}
+
+.chooseCut{
+  float: left;
+  height: 76vh;
+  width: 25vw;
+  margin-left: 1vw;
+}
+
+.progress{
+  height: 100vh;
+  position: fixed;
+  top: 1vh;
+  left: 1vw;
+  width: 5vw;
+  margin-left: 0px;
+}
+
+.next-step{
+  float: left;
+  height: initial;
+}
+
+.button-space{
+  float: left;
+}
+.prev-step{
+  float: left;
+  height: initial;
+}
+
+.slider{
+
+}
+
+.slide-item{
+
+}

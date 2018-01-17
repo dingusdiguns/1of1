@@ -19,7 +19,6 @@ module.exports = {
       method: "Post",
       data: { user: user },
       success: function(data){
-        debugger
         data = JSON.parse( data );
         callback( data );
       }
@@ -39,13 +38,12 @@ module.exports = {
     })
   },
 
-  getPatterns: function(){
+  getPatterns: function( callback ){
     $.ajax({
       url: `/1of1/getPatterns/`,
       method: "GET",
       success: function(data){
         if( !data.error ){
-          debugger
           data = JSON.parse( data );
           callback( data );
         }

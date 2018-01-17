@@ -10,7 +10,7 @@
         $this->sessionToken = $this->updateSessionToken( $this );
         $this->setCookie( $this->sessionToken );
         $instanceVariables = array( "email", "passwordDigest", "sessionToken" );
-        $panel = $this->fuck( self::class,
+        $panel = $this->fuck( "Admin",
         $this->getParams( $instanceVariables ));
       }
     }

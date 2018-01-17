@@ -12,9 +12,9 @@ module.exports = {
       var blue = mask[i+2];
       var alpha = mask[i+3];
       if( alpha && alpha !== 0 ){
-        data[i] = (original[i] * pattern[i]) / 255;
-        data[i+1] = (original[i+1] * pattern[i+1]) / 255;
-        data[i+2] = (original[i+2] * pattern[i+2]) / 255;
+        data[i] = (original[i] * (pattern[i] )) / 255;
+        data[i+1] = (original[i+1] * (pattern[i+1] )) / 255;
+        data[i+2] = (original[i+2] * (pattern[i+2] )) / 255;
         data[i+3] = (original[i+3] );
       }
     }
@@ -27,7 +27,7 @@ module.exports = {
     let height = Convert.vhToPx( targHeight );
     let y = Convert.vhToPx( targY );
     let asp = image.width / image.height
-    let x =(window.innerWidth - ( asp * height )) / 2
+    let x = 0;
     c.width = canvas.width;
     c.height = canvas.height;
     ctx.drawImage( image, x, y, asp * height, height  );

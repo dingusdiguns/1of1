@@ -4,7 +4,7 @@ const Api = require('../util/apiUtil');
 
 module.exports = {
   getPatterns: function(){
-    Api.getPatterns( this.receiveCardCreation );
+    Api.getPatterns( this.receivePatterns );
   },
 
   receivePatterns( data ){
